@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:cloudhub="http://www.mulesoft.org/schema/mule/cloudhub"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/cloudhub http://www.mulesoft.org/schema/mule/cloudhub/current/mule-cloudhub.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<cloudhub:config name="CloudHub_Config" doc:name="CloudHub Config" doc:id="06a0c47a-41b7-4285-9aef-3582b136d910" >
+		<cloudhub:connection username="yashujalla" password="YASHUyashu@2" environment="1817eec4-1f9f-4075-b7d9-752b995d8150" />
+	</cloudhub:config>
+	<flow name="cloudhub-alertFlow" doc:id="f313f7ba-f3b6-4815-88bd-d1df57d104a3" >
+		<scheduler doc:name="Scheduler" doc:id="1cb6a70a-e830-4fd9-8f0f-b6ad1ed43963" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="10" timeUnit="SECONDS"/>
+			</scheduling-strategy>
+		</scheduler>
+		<ee:transform doc:name="Transform Message" doc:id="d9fb40ec-cfd9-4851-a9e0-b1afaa18dc43" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"message" : "hello world"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="a982e443-0b70-4f29-ade6-e102df3a868e" message="#[payload]"/>
+	</flow>
+</mule>
